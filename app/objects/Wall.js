@@ -43,10 +43,26 @@ var Wall = function(params){
   wall.toThree = function(scene, roomProps){
     // Organize start xs and ys to be less than end xs and ys
     var sx,sy,ex,ey;
-    // if (wall.sx < )
-    var geometry = new THREE.BoxGeometry( Math.abs(sx - ex), , 2 );
+    if (wall.sx < wall.ex){
+      sx = wall.sx;
+      ex = wall.ex;
+    }else{
+      sx = wall.ex;
+      ex = wall.sx;
+    }
+    if (wall.sy < wall.ey){
+      sy = wall.sy;
+      ey = wall.ey;
+    }else{
+      sy = wall.ey;
+      ey = wall.sy;
+    }
+
+    // create three.js object
+    var geometry = new THREE.BoxGeometry( ex - sx, ey - sy , roomProps.wallHeight );
 		var material = new THREE.MeshLambertMaterial( { color: 0x888888 } );
     var cube = new THREE.Mesh( geometry, material );
+    cube.position.set((sx + ex)/2,(sy + ey)/2,0);
 		return cube;
   };
 
