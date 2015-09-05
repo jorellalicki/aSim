@@ -8,16 +8,23 @@ Functions: TODO
 
 */
 
-var Room = function(){
+var Room = function(params){
 
   // General room properties
   var properties = {
-    wallHeight: 2.5,
-    wallWidth: .1
+    wallHeight: params.wallHeight || 2.5,
+    wallWidth: params.wallWidth || .1
   };
 
   // stores objects
   var objects = [];
+
+  // Called on construction to initialize the room
+  function init(){
+    // Add the floor and ceiling
+    // add(new Floor({ceiling:false}));
+    // add(new Floor({ceiling:true}));
+  }
 
 
   // Adds objects
@@ -87,12 +94,14 @@ var Room = function(){
 			renderer.render(scene, camera);
 		};
 		render();
+
     return {
       scene: scene,
       roomObjects: roomObjects
     };
   }
 
+  init();
   return {
     add: add,
     toThree: toThree,

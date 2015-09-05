@@ -1,6 +1,9 @@
 $(window).ready(function(){
 
-  var room = new Room();
+  var room = new Room({
+    wallHeight: 2.5,
+    wallWidth: .1
+  });
 
   room.add(new Wall({ sx:0 , sy:0, ex: 4, ey:0 }));
   room.add(new Wall({ sx:4 , sy:0, ex: 4, ey:4 }));
@@ -9,7 +12,7 @@ $(window).ready(function(){
 
   room.add(new Obstr({sx: 1, sy:1, width:.5, length:1, height:.5}))
   room.add(new Obstr({sx: 3, sy:3, width:.5, length:.5, height:2}))
-  room.add(new Obstr({sx: 2, sy:2, width:.5, length:.5, height:.5}))
+  room.add(new Obstr({sx: .5, sy:3.5, width:.5, length:.5, height:.5}))
 
   var info3D = room.toThree({
     centerOn: {x: 2,y: 2},
@@ -19,8 +22,8 @@ $(window).ready(function(){
 
   tracer.calculateRays(info3D, [
     tracer.Ray({
-        x: 2, y:2, z:.1,
-        dx: .6, dy:.5, dz: 0
+        x: 2, y:2, z:.5,
+        dx: -.5, dy:2, dz: 0
     })
   ]);
 

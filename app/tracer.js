@@ -51,6 +51,7 @@ var tracer = (function(){
 
     // Find normal
     var normal = intersection.face.normal;
+
     // Find reflection
     var reflection = direction.reflect(normal);
 
@@ -62,12 +63,17 @@ var tracer = (function(){
     };
   }
 
+  var lastDebugPoint = null;
   function addDebugPoint(scene,x,y,z){
-    geometry = new THREE.SphereGeometry( .1, .1, .1 ) ;
+    if (lastDebugPoint){
+      scene.remove(lastDebugPoint);
+    }
+    geometry = new THREE.SphereGeometry( .05, .05, .05 ) ;
     material = new THREE.MeshLambertMaterial( { color:0x00CCFF } ) ;
     mesh = new THREE.Mesh( geometry, material ) ;
     mesh.position.set( x, y, z ) ;
     scene.add(mesh);
+    lastDebugPoint = mesh;
   }
 
   function calculateRays(info3D, initialRays){
@@ -92,7 +98,9 @@ var tracer = (function(){
       for (var i = rays.length-1;i >= 0; i--){
         var ray = rays[i];
         addDebugPoint(scene, ray.x, ray.y, ray.z);
-        if (ray.it <= 0){
+        if (ray.it <= 1){
+          //TODO move remainder
+          // console.log("A",[ray.x,ray.y,ray.z],[ray.dx,ray.dy,ray.dz]);
           // Ray becomes reflected array and find new next ray
           ray.x = ray.nextIntersection.point.x;
           ray.y = ray.nextIntersection.point.y;
@@ -102,13 +110,15 @@ var tracer = (function(){
           ray.dy = ray.nextIntersection.reflection.y;
           ray.dz = ray.nextIntersection.reflection.z;
 
-          ray.x += ray.dx * moveSpeed;
-          ray.x += ray.dy * moveSpeed;
-          ray.x += ray.dz * moveSpeed;
+          // console.log("B",[ray.x,ray.y,ray.z],[ray.dx,ray.dy,ray.dz]);
 
+          // ray.x += ray.dx * moveSpeed;
+          // ray.y += ray.dy * moveSpeed;
+          // ray.z += ray.dz * moveSpeed;
           ray.nextIntersection = getNextRay(ray, info3D.roomObjects.children);
 
           if (!ray.nextIntersection){
+            console.log("Spliced");
             rays.splice(i,1);
             continue;
           }

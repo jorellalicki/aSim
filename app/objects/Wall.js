@@ -58,11 +58,19 @@ var Wall = function(params){
       ey = wall.sy;
     }
 
+    // Calculate midpoint and angle
+    var mx = (sx + ex)/2;
+    var my = (sy + ey)/2;
+    var length = Math.sqrt(Math.pow(ex - sx,2) + Math.pow(ey - sy,2));
+    var angle = Math.atan2(ey- sy, ex - sx);
+
     // create three.js object
-    var geometry = new THREE.BoxGeometry( ex - sx, ey - sy , roomProps.wallHeight );
+    var geometry = new THREE.BoxGeometry( roomProps.wallWidth, length + roomProps.wallWidth , roomProps.wallHeight);
 		var material = new THREE.MeshLambertMaterial( { color: 0xff00ff } );
     var cube = new THREE.Mesh( geometry, material );
-    cube.position.set((sx + ex)/2,(sy + ey)/2,roomProps.wallHeight/2);
+    cube.rotation.z = angle - Math.PI/2;
+    cube.position.set(mx,my,roomProps.wallHeight/2);
+    cube.geometry.computeFaceNormals();
 		return cube;
   };
 
