@@ -66,6 +66,28 @@ function am_wattstodbC(input){
 ////                                                ////
 ////////////////////////////////////////////////////////
 
+function am_rt30(input){    
+	return rt30;
+}
+
+function am_rt60(input){    
+	return rt60;
+}
+
+function am_nc(input){    
+	return nc;
+}
+
+function am_rc(input){    
+	return rc;
+}
+
+function am_ai(input){    
+	return ai;
+}
+
+
+
 
 
 
