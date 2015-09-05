@@ -19,13 +19,14 @@ var cweight = [-8.5, -3, -.8, -.2, 0, 0, 0, -.2, -.8, -3, -8.5];
 function am_wattstodb(input){    
 	var outputdb = 0;
 	var tempdbspl = [];
+	var psum = 0;
    for(var i = 0; i < input.length; i++){
-	  tempdbspl.push(math.sqrt(input[i]*413)); //Convert intensity (w/m^2) to SPL
+	  tempdbspl.push(Math.sqrt(input[i]*413)); //Convert intensity (w/m^2) to SPL
    }
    for(var i = 0; i < tempdbspl.length; i++){
-	  psum+=math.pow(tempdbspl[i],2); 
+	  psum+=Math.pow(tempdbspl[i],2); 
    }
-   return 10*math.log10(psum/.00002);
+   return 10*Math.log10(psum/.00002);
 }
 
 
@@ -33,26 +34,29 @@ function am_wattstodb(input){
 function am_wattstodbA(input){    
 	var outputdb = 0;
 	var tempdbspl = [];
+	var psum = 0;
+
    for(var i = 0; i < input.length; i++){
-	  tempdbspl.push(math.sqrt(input[i]*413)+aweight[i]); //Convert intensity (w/m^2) to SPL, A weighted
+	  tempdbspl.push(Math.sqrt(input[i]*413)+aweight[i]); //Convert intensity (w/m^2) to SPL, A weighted
    }
    for(var i = 0; i < tempdbspl.length; i++){
-	  psum+=math.pow(tempdbspl[i],2); 
+	  psum+=Math.pow(tempdbspl[i],2); 
    }
-   return 10*math.log10(psum/.00002);
+   return 10*Math.log10(psum/.00002);
 }
 
 //Converts a power array to decibels, C weighted. Assumes 11 element array.
-function am_wattstodbA(input){    
+function am_wattstodbC(input){    
 	var outputdb = 0;
 	var tempdbspl = [];
+	var psum = 0;
    for(var i = 0; i < input.length; i++){
-	  tempdbspl.push(math.sqrt(input[i]*413)+cweight[i]); //Convert intensity (w/m^2) to SPL, C weighted
+	  tempdbspl.push(Math.sqrt(input[i]*413)+cweight[i]); //Convert intensity (w/m^2) to SPL, C weighted
    }
    for(var i = 0; i < tempdbspl.length; i++){
-	  psum+=math.pow(tempdbspl[i],2); 
+	  psum+=Math.pow(tempdbspl[i],2); 
    }
-   return 10*math.log10(psum/.00002);
+   return 10*Math.log10(psum/.00002);
 }
 
 
