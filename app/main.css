@@ -1,0 +1,15 @@
+.header{
+  background-color:#bbb;
+  height:120px;
+}
+.sidebar{
+  background-color:#ccc;
+  height:600px;
+}
+.viewer{
+  height:600px;
+}
+.footer{
+  background-color:#eee;
+  height:200px;
+}
