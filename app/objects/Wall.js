@@ -60,7 +60,7 @@ var Wall = function(params){
 
     // create three.js object
     var geometry = new THREE.BoxGeometry( ex - sx, ey - sy , roomProps.wallHeight );
-		var material = new THREE.MeshLambertMaterial( { color: 0x888888 } );
+		var material = new THREE.MeshLambertMaterial( { color: 0xff00ff } );
     var cube = new THREE.Mesh( geometry, material );
     cube.position.set((sx + ex)/2,(sy + ey)/2,0);
 		return cube;

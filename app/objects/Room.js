@@ -38,11 +38,16 @@ var Room = function(){
   }
 
   // Converts to Three.js scene
-  function toThree(){
+  function toThree(params){
+    params = params || {};
+    params.centerOn = params.centerOn || {x: 0,y: 0};
+    params.cameraRadius = params.cameraRadius || 10;
+    params.cameraHeight = params.cameraHeight || properties.wallHeight * 4;
+
     var width = $(".viewer").width();
     var height = $(".viewer").height();
     var scene = new THREE.Scene();
-		var camera = new THREE.PerspectiveCamera( 90, width/height, 0.1, 1000 );
+		var camera = new THREE.PerspectiveCamera( 45, width/height, 0.1, 1000 );
     var roomObjects = new THREE.Object3D();
 
 		var renderer = new THREE.WebGLRenderer();
@@ -54,21 +59,31 @@ var Room = function(){
       roomObjects.add(mesh);
     }
 
-    scene.add( new THREE.AmbientLight(0x333333) );
+    // scene.add( new THREE.AmbientLight(0x333333) );
 
-    var light = new THREE.PointLight(0xffffff, 6, 40);
-    light.position.set(20, 20, 20);
-    scene.add(light);
+    var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
+    directionalLight.position.set( -.5, -1, .5 );
+    scene.add( directionalLight );
 
-		camera.position.z = 5;
+		camera.position.z = params.cameraHeight;
 
     scene.add(roomObjects);
 
+    renderer.setClearColor( 0xeeeeee, 1);
+    var cameraCenter = new THREE.Vector3(params.centerOn.x,params.centerOn.y,0);
+    console.log(params.centerOn, cameraCenter.x, cameraCenter.y);
+    camera.up = new THREE.Vector3(0,0,1);
+    var t = 0;
 		var render = function () {
+      t++;
 			requestAnimationFrame( render );
 
-			roomObjects.rotation.x = 2 * Math.PI / -8;
-			roomObjects.rotation.z += 0.01;
+      camera.position.set(cameraCenter.x + Math.cos(t/100) * params.cameraRadius,
+                          cameraCenter.y + Math.sin(t/100) * params.cameraRadius,
+                          cameraCenter.z + params.cameraHeight);
+
+
+      camera.lookAt(cameraCenter);
 
 			renderer.render(scene, camera);
 		};
