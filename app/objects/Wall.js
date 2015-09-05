@@ -18,7 +18,7 @@ Structure: {
 Functions:
 
 wall.serialize: Converts wall into javascript object for serialization
-wall.toThree(scene): Converts wall to 3D Rect for three.js and adds to scene
+wall.toThree(scene): Converts wall to 3D Rect for three.js and returns mesh.
 
 */
 
@@ -40,8 +40,14 @@ var Wall = function(params){
     };
   };
 
-  wall.toThree = function(scene){
-    console.error("Not Implemented");
+  wall.toThree = function(scene, roomProps){
+    // Organize start xs and ys to be less than end xs and ys
+    var sx,sy,ex,ey;
+    // if (wall.sx < )
+    var geometry = new THREE.BoxGeometry( Math.abs(sx - ex), , 2 );
+		var material = new THREE.MeshLambertMaterial( { color: 0x888888 } );
+    var cube = new THREE.Mesh( geometry, material );
+		return cube;
   };
 
   return wall;
