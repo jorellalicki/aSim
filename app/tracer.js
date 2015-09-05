@@ -63,17 +63,18 @@ var tracer = (function(){
     };
   }
 
-  var lastDebugPoint = null;
-  function addDebugPoint(scene,x,y,z){
-    if (lastDebugPoint){
-      scene.remove(lastDebugPoint);
+  var debugPoints = {};
+  function addDebugPoint(scene,i,x,y,z){
+    if (debugPoints[i]){
+      debugPoints[i].position.set(x,y,z);
+    }else{
+      geometry = new THREE.SphereGeometry( .05, .05, .05 ) ;
+      material = new THREE.MeshLambertMaterial( { color:0x00CCFF } ) ;
+      mesh = new THREE.Mesh( geometry, material ) ;
+      mesh.position.set( x, y, z ) ;
+      scene.add(mesh);
+      debugPoints[i] = mesh;
     }
-    geometry = new THREE.SphereGeometry( .05, .05, .05 ) ;
-    material = new THREE.MeshLambertMaterial( { color:0x00CCFF } ) ;
-    mesh = new THREE.Mesh( geometry, material ) ;
-    mesh.position.set( x, y, z ) ;
-    scene.add(mesh);
-    lastDebugPoint = mesh;
   }
 
   function calculateRays(info3D, initialRays){
@@ -97,7 +98,7 @@ var tracer = (function(){
     setInterval(function(){
       for (var i = rays.length-1;i >= 0; i--){
         var ray = rays[i];
-        addDebugPoint(scene, ray.x, ray.y, ray.z);
+        addDebugPoint(scene, i, ray.x, ray.y, ray.z);
         if (ray.it <= 1){
           //TODO move remainder
           // console.log("A",[ray.x,ray.y,ray.z],[ray.dx,ray.dy,ray.dz]);
@@ -118,7 +119,6 @@ var tracer = (function(){
           ray.nextIntersection = getNextRay(ray, info3D.roomObjects.children);
 
           if (!ray.nextIntersection){
-            console.log("Spliced");
             rays.splice(i,1);
             continue;
           }

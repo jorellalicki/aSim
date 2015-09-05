@@ -22,8 +22,8 @@ var Room = function(params){
   // Called on construction to initialize the room
   function init(){
     // Add the floor and ceiling
-    // add(new Floor({ceiling:false}));
-    // add(new Floor({ceiling:true}));
+    add(new Floor({ceiling:false}));
+    add(new Floor({ceiling:true}));
   }
 
 

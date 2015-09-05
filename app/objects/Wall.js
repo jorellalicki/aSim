@@ -65,12 +65,18 @@ var Wall = function(params){
     var angle = Math.atan2(ey- sy, ex - sx);
 
     // create three.js object
-    var geometry = new THREE.BoxGeometry( roomProps.wallWidth, length + roomProps.wallWidth , roomProps.wallHeight);
-		var material = new THREE.MeshLambertMaterial( { color: 0xff00ff } );
+    var geometry = new THREE.BoxGeometry(
+        Math.max(ex - sx + roomProps.wallWidth/2, roomProps.wallWidth),
+        Math.max(ey - sy + roomProps.wallWidth/2, roomProps.wallWidth),
+        roomProps.wallHeight );
+
+    var material = new THREE.MeshLambertMaterial( { color: 0xff00ff } );
     var cube = new THREE.Mesh( geometry, material );
-    cube.rotation.z = angle - Math.PI/2;
-    cube.position.set(mx,my,roomProps.wallHeight/2);
-    cube.geometry.computeFaceNormals();
+    cube.position.set(
+      (sx + ex)/2,
+      (sy + ey)/2,
+      roomProps.wallHeight/2);
+
 		return cube;
   };
 
