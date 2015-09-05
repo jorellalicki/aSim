@@ -71,7 +71,6 @@ var Room = function(){
 
     renderer.setClearColor( 0xeeeeee, 1);
     var cameraCenter = new THREE.Vector3(params.centerOn.x,params.centerOn.y,0);
-    console.log(params.centerOn, cameraCenter.x, cameraCenter.y);
     camera.up = new THREE.Vector3(0,0,1);
     var t = 0;
 		var render = function () {

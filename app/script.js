@@ -9,11 +9,19 @@ $(window).ready(function(){
 
   room.add(new Obstr({sx: 1, sy:1, width:.5, length:1, height:.5}))
   room.add(new Obstr({sx: 3, sy:3, width:.5, length:.5, height:2}))
+  room.add(new Obstr({sx: 2, sy:2, width:.5, length:.5, height:.5}))
 
   var info3D = room.toThree({
     centerOn: {x: 2,y: 2},
-    cameraRadius: 6,
-    cameraHeight: 6
+    cameraRadius: 3,
+    cameraHeight: 10
   });
+
+  tracer.calculateRays(info3D, [
+    tracer.Ray({
+        x: 2, y:2, z:.1,
+        dx: .6, dy:.5, dz: 0
+    })
+  ]);
 
 });
